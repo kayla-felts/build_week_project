@@ -10,9 +10,21 @@ def test_valid_input():
     response = client.post(
         '/predict',
         json={
-            'x1': 3.14,
-            'x2': -42,
-            'x3': 'banjo'
+            property_type: 'Apartment'
+            room_type: 'Entire home/apt'
+            bed_type: 'Real Bed'
+            cancellation_policy: 'Strict'
+            city: 'NYC'
+            host_identity_verified: 'True'
+            instant_bookable: 'False'
+            neighbourhood:'Brooklyn Heights'
+            zipcode: 11201
+            amenities: 8
+            accommodates: 3
+            bathrooms: 1
+            bedrooms: 1
+            beds: 1
+            host_since_days: 3341
         }
     )
     body = response.json()
@@ -22,15 +34,27 @@ def test_valid_input():
 
 
 def test_invalid_input():
-    """Return 422 Validation Error when x1 is negative."""
+    """Return 422 Validation Error when amenities is negative."""
     response = client.post(
         '/predict',
         json={
-            'x1': -3.14,
-            'x2': -42,
-            'x3': 'banjo'
+            property_type: 'Apartment'
+            room_type: 'Entire home/apt'
+            bed_type: 'Real Bed'
+            cancellation_policy: 'Strict'
+            city: 'NYC'
+            host_identity_verified: 'True'
+            instant_bookable: 'False'
+            neighbourhood:'Brooklyn Heights'
+            zipcode: 11201
+            amenities: 8
+            accommodates: 3
+            bathrooms: 1
+            bedrooms: 1
+            beds: 1
+            host_since_days: 3341
         }
     )
     body = response.json()
     assert response.status_code == 422
-    assert 'x1' in body['detail'][0]['loc']
+    assert 'amenities' in body['detail'][0]['loc']

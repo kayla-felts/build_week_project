@@ -14,9 +14,22 @@ router = APIRouter()
 class Item(BaseModel):
     """Use this data model to parse the request body JSON."""
 
-    x1: float = Field(..., example=3.14)
-    x2: int = Field(..., example=-42)
-    x3: str = Field(..., example='banjo')
+    property_type: str = Field(..., example='Apartment')
+    room_type: str = Field(..., example='Entire home/apt')
+    bed_type: str = Field(..., example='Real Bed')
+    cancellation_policy: str = Field(..., example='Strict')
+    city: str = Field(..., example='NYC')
+    host_identity_verified: bool = Field(..., example='True')
+    instant_bookable: bool = Field(..., example='True')
+    neighbourhood: str = Field(..., example='Brooklyn Heights')
+    zipcode: int = Field(..., example=11201)
+    amenities: int = Field(..., example=8)
+    accommodates: int = Field(..., example=5)
+    bathrooms: float = Field(..., example=1.5)
+    bedrooms: int = Field(..., example=2)
+    beds: int = Field(..., example=1)
+    host_since_days: int = Field(..., example=365)
+
 
     def to_df(self):
         """Convert pydantic object to pandas dataframe with 1 row."""
@@ -24,24 +37,15 @@ class Item(BaseModel):
 
     @validator('x1')
     def x1_must_be_positive(cls, value):
-        """Validate that x1 is a positive number."""
-        assert value > 0, f'x1 == {value}, must be > 0'
+        """Validate that amenities is a positive number."""
+        assert value > 0, f'amenities == {value}, must be > 0'
         return value
 
 
 @router.post('/predict')
 async def predict(item: Item):
     """
-    Make random baseline predictions for classification problem 🔮
-    ### Request Body
-    - `x1`: positive float
-    - `x2`: integer
-    - `x3`: string
-    ### Response
-    - `prediction`: boolean, at random
-    - `predict_proba`: float between 0.5 and 1.0, 
-    representing the predicted class's probability
-    Replace the placeholder docstring and fake predictions with your own model.
+    Make random baseline predictions for classification problem
     """
     X_new = item.to_df()
     log.info(X_new)
