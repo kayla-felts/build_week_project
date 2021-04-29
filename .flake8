@@ -1,0 +1,4 @@
+[flake8]
+ignore = D100,D204,W291
+classmethod-decorators = validator,classmethod
+ignore-names = X*,setup,tearDown,setUpClass,tearDownClass,setUpTestData,failureException,longMessage,maxDiff
